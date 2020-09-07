@@ -1,0 +1,1712 @@
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+  [1m[35m (380.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (106.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (24.8ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5580328849608682365)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateSamuraiUsers (20200804070335)
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (78.4ms)[0m  [1m[35mCREATE TABLE "samurai_users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (36.3ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_samurai_users_on_email" ON "samurai_users"  ("email")[0m
+  [1m[35m (38.6ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_samurai_users_on_reset_password_token" ON "samurai_users"  ("reset_password_token")[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200804070335"]]
+  [1m[35m (17.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAdminToSamuraiUsers (20200804075821)
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "samurai_users" ADD "admin" boolean[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200804075821"]]
+  [1m[35m (16.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSamuraiContactsContacts (20200804160050)
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (418.9ms)[0m  [1m[35mCREATE TABLE "samurai_contacts_contacts" ("id" bigserial primary key, "first_name" character varying, "last_name" character varying, "company" character varying, "email" character varying, "phone" character varying, "user_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_b1d1888804"
+FOREIGN KEY ("user_id")
+  REFERENCES "samurai_users" ("id")
+)[0m
+  [1m[35m (33.3ms)[0m  [1m[35mCREATE  INDEX  "index_samurai_contacts_contacts_on_user_id" ON "samurai_contacts_contacts"  ("user_id")[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200804160050"]]
+  [1m[35m (58.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSamuraiTasksTasks (20200811074509)
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (93.4ms)[0m  [1m[35mCREATE TABLE "samurai_tasks_tasks" ("id" bigserial primary key, "title" character varying, "content" text, "user_id" bigint, "contact_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL, CONSTRAINT "fk_rails_4082a92b99"
+FOREIGN KEY ("user_id")
+  REFERENCES "samurai_users" ("id")
+, CONSTRAINT "fk_rails_bd4db0db74"
+FOREIGN KEY ("contact_id")
+  REFERENCES "samurai_contacts_contacts" ("id")
+)[0m
+  [1m[35m (69.6ms)[0m  [1m[35mCREATE  INDEX  "index_samurai_tasks_tasks_on_user_id" ON "samurai_tasks_tasks"  ("user_id")[0m
+  [1m[35m (40.1ms)[0m  [1m[35mCREATE  INDEX  "index_samurai_tasks_tasks_on_contact_id" ON "samurai_tasks_tasks"  ("contact_id")[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20200811074509"]]
+  [1m[35m (57.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2020-09-03 06:59:26.754756"], ["updated_at", "2020-09-03 06:59:26.754756"]]
+  [1m[35m (11.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_advisory_unlock(5580328849608682365)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-03 14:00:25 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (4.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+Completed 401 Unauthorized in 76ms (ActiveRecord: 24.7ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2020-09-03 14:00:25 +0700
+Processing by Devise::SessionsController#new as HTML
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (3.7ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (175.3ms)
+Started GET "/users/sign_in" for ::1 at 2020-09-03 14:00:29 +0700
+Processing by Devise::SessionsController#new as HTML
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.6ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (10.2ms)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _1fbdcb2c38cf0523079da86697b7bc99 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _786c082211a81eed538f53c0477f3a9d at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _786c082211a81eed538f53c0477f3a9d at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _1fbdcb2c38cf0523079da86697b7bc99 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+Started GET "/" for ::1 at 2020-09-03 14:00:39 +0700
+Processing by Samurai::DashboardController#index as HTML
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms)
+
+
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _1fbdcb2c38cf0523079da86697b7bc99 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _786c082211a81eed538f53c0477f3a9d at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _1fbdcb2c38cf0523079da86697b7bc99 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+DEPRECATION WARNING: autoprefixer-rails was deprected. Migration guide:
+https://github.com/ai/autoprefixer-rails/wiki/Deprecated (called from _786c082211a81eed538f53c0477f3a9d at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/layouts/samurai/application.html.erb:6)
+Completed 200 OK in 14447ms (Views: 14446.0ms | ActiveRecord: 0.0ms)
+
+
+Completed 200 OK in 18206ms (Views: 18186.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2020-09-03 14:00:43 +0700
+Processing by Devise::SessionsController#new as HTML
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (2.0ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (9.9ms)
+Completed 200 OK in 160ms (Views: 157.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/sign_up" for ::1 at 2020-09-03 14:00:58 +0700
+Processing by Devise::RegistrationsController#new as HTML
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/new.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _301ff39d72a64c536dd2457d4014715b at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/new.html.erb:5)
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.1ms)
+  Rendered engines/core/app/views/devise/registrations/new.html.erb within layouts/samurai/application (6.3ms)
+Completed 200 OK in 115ms (Views: 113.7ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users" for ::1 at 2020-09-03 14:01:05 +0700
+Processing by Devise::RegistrationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"zJpxzTUz+Wa3cXCYavJx5y+xEh5fJSAE88BgZQ5HLouca1YsPBRKJWzGqE1SBb+RAmgFmsb7kNXXR2qh64zyJQ==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign up"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSamurai::User Exists (2.8ms)[0m  [1m[34mSELECT  1 AS one FROM "samurai_users" WHERE "samurai_users"."email" = $1 LIMIT $2[0m  [["email", "01673khanh@gmail.com"], ["LIMIT", 1]]
+  [1m[35mSQL (2.4ms)[0m  [1m[32mINSERT INTO "samurai_users" ("email", "encrypted_password", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["email", "01673khanh@gmail.com"], ["encrypted_password", "$2a$12$IoMTvp9XnV6Kcta2ZPikcewVdXTZGfrOwqPb4onzx1XLQ73xikYSq"], ["created_at", "2020-09-03 07:01:06.050577"], ["updated_at", "2020-09-03 07:01:06.050577"]]
+  [1m[35m (47.8ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 571ms (ActiveRecord: 53.2ms)
+
+
+Started GET "/" for ::1 at 2020-09-03 14:01:06 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (2.6ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (45.4ms)
+Completed 200 OK in 302ms (Views: 113.4ms | ActiveRecord: 10.1ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-03 14:01:11 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (1.8ms)
+Completed 200 OK in 76ms (Views: 67.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:01:12 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (2.2ms)
+Completed 200 OK in 63ms (Views: 55.8ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/" for ::1 at 2020-09-03 14:01:13 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (4.3ms)
+Completed 200 OK in 100ms (Views: 70.2ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:01:18 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (3.0ms)
+Completed 200 OK in 84ms (Views: 73.6ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-03 14:01:20 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.7ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (1.7ms)
+Completed 200 OK in 77ms (Views: 67.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/tasks/new" for ::1 at 2020-09-03 14:01:21 +0700
+Processing by Samurai::Tasks::TasksController#new as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT "samurai_users".* FROM "samurai_users"[0m
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/_form.html.erb (7.1ms)
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application (10.4ms)
+Completed 200 OK in 98ms (Views: 64.0ms | ActiveRecord: 7.7ms)
+
+
+Started POST "/tasks" for ::1 at 2020-09-03 14:02:46 +0700
+Processing by Samurai::Tasks::TasksController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"YMDSIT2Dzj+JNQcnHhQ6zZkAsweG0/ZAuDju18IH5oowMfXANKR9fFKC3/Im4/S7tNmkgx8NRpGcv+QTJ8w6JA==", "task"=>{"title"=>"NGày mai báo cáo", "content"=>"Demo 2 cái project", "user_id"=>"1"}, "commit"=>"Create Task"}
+  [1m[36mSamurai::User Load (0.7ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.8ms)[0m  [1m[31mROLLBACK[0m
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT "samurai_users".* FROM "samurai_users"[0m
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/_form.html.erb (6.3ms)
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application (8.7ms)
+Completed 200 OK in 273ms (Views: 121.4ms | ActiveRecord: 4.2ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:02:48 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (1.9ms)
+Completed 200 OK in 83ms (Views: 73.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-03 14:02:49 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _7eceb38da52aa297bcbf6424fb1ba084 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (4.8ms)
+Completed 200 OK in 225ms (Views: 218.7ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:02:51 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (4.9ms)
+Completed 200 OK in 77ms (Views: 71.1ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/contacts/new" for ::1 at 2020-09-03 14:02:53 +0700
+Processing by Samurai::Contacts::ContactsController#new as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/new.html.erb within layouts/samurai/application
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/_form.html.erb (9.0ms)
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/new.html.erb within layouts/samurai/application (27.1ms)
+Completed 200 OK in 141ms (Views: 94.5ms | ActiveRecord: 3.1ms)
+
+
+Started POST "/contacts" for ::1 at 2020-09-03 14:03:00 +0700
+Processing by Samurai::Contacts::ContactsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"y3ROdFkVhmmkf5vEaTcCqFDI4d9kXBrasEXE+Fg/EFmbhWmVUDI1Kn/IQxFRwMzefRH2W/2CqguUws48vfTM9w==", "contact"=>{"first_name"=>"Quốc Khánh", "last_name"=>"Huỳnh", "company"=>"TDC", "email"=>"01673khanh@gmail.com", "phone"=>"0834177401"}, "commit"=>"Create Contact"}
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (3.8ms)[0m  [1m[32mINSERT INTO "samurai_contacts_contacts" ("first_name", "last_name", "company", "email", "phone", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["first_name", "Quốc Khánh"], ["last_name", "Huỳnh"], ["company", "TDC"], ["email", "01673khanh@gmail.com"], ["phone", "0834177401"], ["user_id", 1], ["created_at", "2020-09-03 07:03:00.664967"], ["updated_at", "2020-09-03 07:03:00.664967"]]
+  [1m[35m (45.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/contacts/1
+Completed 302 Found in 69ms (ActiveRecord: 50.8ms)
+
+
+Started GET "/contacts/1" for ::1 at 2020-09-03 14:03:00 +0700
+Processing by Samurai::Contacts::ContactsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSamurai::User Load (2.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.8ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.3ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."contact_id" = $1[0m  [["contact_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application (7.9ms)
+Completed 200 OK in 149ms (Views: 90.9ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:03:03 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (5.2ms)
+Completed 200 OK in 65ms (Views: 60.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for ::1 at 2020-09-03 14:03:04 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (4.0ms)
+Completed 200 OK in 107ms (Views: 67.7ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-03 14:03:06 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (2.7ms)
+Completed 200 OK in 119ms (Views: 109.3ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-03 14:03:08 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (1.6ms)
+Completed 200 OK in 80ms (Views: 72.8ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/tasks/new" for ::1 at 2020-09-03 14:03:09 +0700
+Processing by Samurai::Tasks::TasksController#new as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT "samurai_users".* FROM "samurai_users"[0m
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/_form.html.erb (4.7ms)
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application (7.4ms)
+Completed 200 OK in 81ms (Views: 71.7ms | ActiveRecord: 2.0ms)
+
+
+Started POST "/tasks" for ::1 at 2020-09-03 14:03:21 +0700
+Processing by Samurai::Tasks::TasksController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UOGKh+TGF23NxdC5g+G9Y6YE7aQSuHXvKICuGZPCfNsAEK1m7eGkLhZyCGy7FnMVi936IItmxT4MB6TddgmgdQ==", "task"=>{"title"=>"NGày mai báo cáo", "content"=>"Demo 2 cái project", "user_id"=>"1", "contact_id"=>"1"}, "commit"=>"Create Task"}
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "samurai_tasks_tasks" ("title", "content", "user_id", "contact_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "NGày mai báo cáo"], ["content", "Demo 2 cái project"], ["user_id", 1], ["contact_id", 1], ["created_at", "2020-09-03 07:03:21.973804"], ["updated_at", "2020-09-03 07:03:21.973804"]]
+  [1m[35m (25.8ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/tasks/1
+Completed 302 Found in 43ms (ActiveRecord: 29.3ms)
+
+
+Started GET "/tasks/1" for ::1 at 2020-09-03 14:03:22 +0700
+Processing by Samurai::Tasks::TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSamurai::User Load (0.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Tasks::Task Load (0.2ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/show.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/show.html.erb within layouts/samurai/application (2.4ms)
+Completed 200 OK in 82ms (Views: 50.5ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for ::1 at 2020-09-03 14:03:23 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (3.7ms)
+Completed 200 OK in 108ms (Views: 69.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-03 14:03:25 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (2.3ms)
+Completed 200 OK in 81ms (Views: 72.2ms | ActiveRecord: 1.6ms)
+
+
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-03 23:05:40 +0700
+Processing by Samurai::DashboardController#index as HTML
+Completed 401 Unauthorized in 38ms
+
+
+Started GET "/users/sign_in" for ::1 at 2020-09-03 23:05:41 +0700
+Processing by Devise::SessionsController#new as HTML
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.3ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (56.9ms)
+Completed 200 OK in 1832ms (Views: 1026.3ms | ActiveRecord: 595.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2020-09-03 23:05:53 +0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AL47ztuAg0ovLWkPvIapx5+OOEuSvA2wYPSrbFucAc3cWsxKmHRT1PT9sZh/56TajoCvIqFBR0cvSTbugjU8eg==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mSamurai::User Load (101.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."email" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["email", "01673khanh@gmail.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 691ms (ActiveRecord: 101.5ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"AL47ztuAg0ovLWkPvIapx5+OOEuSvA2wYPSrbFucAc3cWsxKmHRT1PT9sZh/56TajoCvIqFBR0cvSTbugjU8eg==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.6ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (8.3ms)
+Completed 200 OK in 375ms (Views: 121.0ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2020-09-03 23:08:37 +0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Xk798s3H5fQtL7oiiBl6jlQhbwb8AbNqb0/pp61Zjv+Cqgp2jjM1avb/YrVLeHeTRS/4b8/8+Z0g8nQldPCzSA==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mSamurai::User Load (1.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."email" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["email", "01673khanh@gmail.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 275ms (ActiveRecord: 1.5ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Xk798s3H5fQtL7oiiBl6jlQhbwb8AbNqb0/pp61Zjv+Cqgp2jjM1avb/YrVLeHeTRS/4b8/8+Z0g8nQldPCzSA==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.8ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (6.2ms)
+Completed 200 OK in 316ms (Views: 71.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2020-09-03 23:08:41 +0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"BF6RHQfhnb8MSd6YjwknoQuCyhbTaSw0s6AIuIiHbdXYumaZRBVNIdeZBg9MaCq8Goxdf+CUZsP8HZU6US5QYg==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mSamurai::User Load (0.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."email" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["email", "01673khanh@gmail.com"], ["LIMIT", 1]]
+Completed 401 Unauthorized in 280ms (ActiveRecord: 0.6ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"BF6RHQfhnb8MSd6YjwknoQuCyhbTaSw0s6AIuIiHbdXYumaZRBVNIdeZBg9MaCq8Goxdf+CUZsP8HZU6US5QYg==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application
+  Rendered engines/core/app/views/devise/shared/_links.html.erb (1.8ms)
+  Rendered engines/core/app/views/devise/sessions/new.html.erb within layouts/samurai/application (6.9ms)
+Completed 200 OK in 345ms (Views: 86.4ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2020-09-03 23:08:51 +0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"nhb5LQQfRVGymRSoo1H3U5PpL3c29ezNfjnpMgTfMs5C8g6pR+uVz2lJzD9gMPpOgue4HgUIpjoxhHSw3XYPeQ==", "user"=>{"email"=>"01673khanh@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."email" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["email", "01673khanh@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (71.1ms)[0m  [1m[33mUPDATE "samurai_users" SET "remember_created_at" = $1, "updated_at" = $2 WHERE "samurai_users"."id" = $3[0m  [["remember_created_at", "2020-09-03 16:08:51.822826"], ["updated_at", "2020-09-03 16:08:51.823730"], ["id", 1]]
+  [1m[35m (616.2ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 988ms (ActiveRecord: 688.4ms)
+
+
+Started GET "/" for ::1 at 2020-09-03 23:08:52 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (42.7ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (12.2ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (111.9ms)
+Completed 200 OK in 370ms (Views: 174.6ms | ActiveRecord: 68.8ms)
+
+
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-04 08:53:04 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (49.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (36.7ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (12.1ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (159.9ms)
+Completed 200 OK in 2813ms (Views: 1128.8ms | ActiveRecord: 566.8ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 09:06:28 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (3.6ms)
+Completed 200 OK in 135ms (Views: 126.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 09:06:28 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.9ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (11.1ms)
+Completed 200 OK in 95ms (Views: 85.2ms | ActiveRecord: 1.4ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-04 09:06:29 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _dcb8afeb10e78ec1825f4252dbecc3f7 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (78.7ms)
+Completed 200 OK in 179ms (Views: 172.2ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 09:06:37 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (1.6ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (2.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (13.7ms)
+Completed 200 OK in 176ms (Views: 138.6ms | ActiveRecord: 5.2ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 09:07:12 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (4.9ms)
+Completed 200 OK in 141ms (Views: 111.1ms | ActiveRecord: 1.5ms)
+
+
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-04 11:12:23 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.8ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (76.9ms)
+Completed 200 OK in 2569ms (Views: 1151.7ms | ActiveRecord: 185.0ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 11:12:32 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (3.0ms)
+Completed 200 OK in 159ms (Views: 106.8ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 11:12:34 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.7ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (5.0ms)
+Completed 200 OK in 97ms (Views: 67.4ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 11:12:48 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.9ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (4.1ms)
+Completed 200 OK in 72ms (Views: 63.5ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 11:13:07 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (3.4ms)
+Completed 200 OK in 86ms (Views: 74.3ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-04 11:13:09 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (0.7ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _b9cb2c6f5da91dbe0ed420682350afe2 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (32.4ms)
+Completed 200 OK in 103ms (Views: 98.0ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 11:13:09 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (4.3ms)
+Completed 200 OK in 79ms (Views: 73.4ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/contacts/new" for ::1 at 2020-09-04 11:13:11 +0700
+Processing by Samurai::Contacts::ContactsController#new as HTML
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/new.html.erb within layouts/samurai/application
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/_form.html.erb (2.5ms)
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/new.html.erb within layouts/samurai/application (5.5ms)
+Completed 200 OK in 123ms (Views: 94.6ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/contacts" for ::1 at 2020-09-04 11:13:20 +0700
+Processing by Samurai::Contacts::ContactsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"cMHczBZmpeDNMXSeI6u03vWUnwI+mkTKC97X6ut5w6WDskkeq5ot8IWU3+vX7NAcmuVQbpsFdvEJtVpLxBr0jA==", "contact"=>{"first_name"=>"Nguyễn Văn", "last_name"=>"A", "company"=>"HHO", "email"=>"vana@gmail.com", "phone"=>"11111111111"}, "commit"=>"Create Contact"}
+  [1m[36mSamurai::User Load (1.8ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (89.0ms)[0m  [1m[32mINSERT INTO "samurai_contacts_contacts" ("first_name", "last_name", "company", "email", "phone", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["first_name", "Nguyễn Văn"], ["last_name", "A"], ["company", "HHO"], ["email", "vana@gmail.com"], ["phone", "11111111111"], ["user_id", 1], ["created_at", "2020-09-04 04:13:20.982375"], ["updated_at", "2020-09-04 04:13:20.982375"]]
+  [1m[35m (49.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/contacts/2
+Completed 302 Found in 153ms (ActiveRecord: 140.4ms)
+
+
+Started GET "/contacts/2" for ::1 at 2020-09-04 11:13:21 +0700
+Processing by Samurai::Contacts::ContactsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (1.8ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (57.2ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."contact_id" = $1[0m  [["contact_id", 2]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application (63.2ms)
+Completed 200 OK in 180ms (Views: 85.2ms | ActiveRecord: 60.1ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 11:13:23 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (1.0ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (5.1ms)
+Completed 200 OK in 78ms (Views: 66.5ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 11:13:24 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.7ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (4.1ms)
+Completed 200 OK in 89ms (Views: 79.3ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/tasks/new" for ::1 at 2020-09-04 11:13:25 +0700
+Processing by Samurai::Tasks::TasksController#new as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT "samurai_users".* FROM "samurai_users"[0m
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/_form.html.erb (6.2ms)
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application (8.8ms)
+Completed 200 OK in 78ms (Views: 68.0ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/tasks" for ::1 at 2020-09-04 11:13:35 +0700
+Processing by Samurai::Tasks::TasksController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Dgl8jIW2jAn8tCg6dGvRU63+VUNgZ+a8iU7mdBL8kwH9euleOEoEGbQRg0+ALLWRwo+aL8X41IeLJWvVPZ+kKA==", "task"=>{"title"=>"Ngày 4-9-2020", "content"=>"11111111111111", "user_id"=>"1", "contact_id"=>"2"}, "commit"=>"Create Task"}
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSamurai::User Load (0.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (123.8ms)[0m  [1m[32mINSERT INTO "samurai_tasks_tasks" ("title", "content", "user_id", "contact_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "Ngày 4-9-2020"], ["content", "11111111111111"], ["user_id", 1], ["contact_id", 2], ["created_at", "2020-09-04 04:13:35.814433"], ["updated_at", "2020-09-04 04:13:35.814433"]]
+  [1m[35m (31.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/tasks/2
+Completed 302 Found in 174ms (ActiveRecord: 156.8ms)
+
+
+Started GET "/tasks/2" for ::1 at 2020-09-04 11:13:35 +0700
+Processing by Samurai::Tasks::TasksController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSamurai::User Load (1.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Tasks::Task Load (1.0ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/show.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/show.html.erb within layouts/samurai/application (2.2ms)
+Completed 200 OK in 89ms (Views: 67.7ms | ActiveRecord: 3.3ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 11:13:37 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (6.9ms)
+Completed 200 OK in 108ms (Views: 88.5ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 11:21:21 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.9ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (14.0ms)
+Completed 200 OK in 114ms (Views: 95.7ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 11:21:30 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (3.1ms)
+Completed 200 OK in 74ms (Views: 64.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 11:21:31 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (2.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (3.8ms)
+Completed 200 OK in 118ms (Views: 82.2ms | ActiveRecord: 2.7ms)
+
+
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-04 15:46:13 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (29.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (29.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (4.7ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (116.0ms)
+Completed 200 OK in 2272ms (Views: 929.6ms | ActiveRecord: 479.8ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-04 15:51:42 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _3683f39f763e3f612266604f811aaaca at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (75.7ms)
+Completed 200 OK in 192ms (Views: 184.9ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 15:51:44 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (6.4ms)
+Completed 200 OK in 66ms (Views: 62.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/contacts/2/edit" for ::1 at 2020-09-04 15:51:47 +0700
+Processing by Samurai::Contacts::ContactsController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSamurai::User Load (0.7ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.5ms)
+Completed 403 Forbidden in 11ms (Views: 3.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/contacts/2" for ::1 at 2020-09-04 15:51:49 +0700
+Processing by Samurai::Contacts::ContactsController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSamurai::User Load (1.7ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.9ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 1 overrides found for 'samurai/contacts/contacts/show'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_to_contact' matched 1 times with '[data-samurai-hook='contacts_show']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_to_contact', you should change its definition to include:
+ :original => '98a78123a4c3e487a16a47f0ed2ded2a8b5bed73' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."contact_id" = $1[0m  [["contact_id", 2]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/show.html.erb within layouts/samurai/application (8.0ms)
+Completed 200 OK in 119ms (Views: 76.4ms | ActiveRecord: 3.0ms)
+
+
+Started GET "/contacts/1/edit" for ::1 at 2020-09-04 15:51:56 +0700
+Processing by Samurai::Contacts::ContactsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSamurai::User Load (1.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.9ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.6ms)
+Completed 403 Forbidden in 14ms (Views: 4.0ms | ActiveRecord: 2.4ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 15:51:58 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (4.0ms)
+Completed 200 OK in 94ms (Views: 84.3ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/tasks/1/edit" for ::1 at 2020-09-04 15:51:59 +0700
+Processing by Samurai::Tasks::TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mSamurai::User Load (1.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.5ms)
+Completed 403 Forbidden in 12ms (Views: 2.8ms | ActiveRecord: 2.0ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 15:52:02 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (6.5ms)
+Completed 200 OK in 104ms (Views: 70.1ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 15:55:42 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (2.7ms)
+Completed 200 OK in 78ms (Views: 69.3ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-04 15:55:45 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _7db7739262f7ff4f1b606c1c6e1db5f1 at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (22.7ms)
+Completed 200 OK in 98ms (Views: 91.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/contacts" for ::1 at 2020-09-04 15:55:46 +0700
+Processing by Samurai::Contacts::ContactsController#index as HTML
+  [1m[36mSamurai::User Load (0.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Contacts::Contact Load (0.6ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/contacts/app/views/samurai/contacts/contacts/index.html.erb within layouts/samurai/application (5.8ms)
+Completed 200 OK in 92ms (Views: 86.4ms | ActiveRecord: 1.1ms)
+
+
+Started DELETE "/contacts/2" for ::1 at 2020-09-04 15:55:49 +0700
+Processing by Samurai::Contacts::ContactsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Siynafc+0QNlLfsBn9UoY6QKUq+6RQViZfa03zImRqSQvcSnjy3rTA8XK9KuLwnfO5E32/1SVjF43YeY/8JwzA==", "id"=>"2"}
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (0.3ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.4ms)
+Completed 403 Forbidden in 6ms (Views: 1.9ms | ActiveRecord: 0.7ms)
+
+
+Started DELETE "/contacts/2" for ::1 at 2020-09-04 15:55:53 +0700
+Processing by Samurai::Contacts::ContactsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Siynafc+0QNlLfsBn9UoY6QKUq+6RQViZfa03zImRqSQvcSnjy3rTA8XK9KuLwnfO5E32/1SVjF43YeY/8JwzA==", "id"=>"2"}
+  [1m[36mSamurai::User Load (1.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Contacts::Contact Load (1.2ms)[0m  [1m[34mSELECT  "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.7ms)
+Completed 403 Forbidden in 18ms (Views: 4.9ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 15:55:55 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.9ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (6.3ms)
+Completed 200 OK in 105ms (Views: 64.5ms | ActiveRecord: 2.5ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 15:56:15 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (0.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.4ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (4.0ms)
+Completed 200 OK in 63ms (Views: 59.0ms | ActiveRecord: 0.8ms)
+
+
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :contacts, class_name: 'Samurai::Contacts::Contact'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/contacts/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/user_decorator.rb:2)
+DEPRECATION WARNING: Passing a class to the `class_name` is deprecated and will raise an ArgumentError in Rails 5.2. It eagerloads more classes than necessary and potentially creates circular dependencies. Please pass the class name as a string: `has_many :tasks, class_name: 'Samurai::Tasks::Task'` (called from block in <top (required)> at /home/khanh/Downloads/SamuraiCRM/engines/tasks/app/decorators/models/contact_decorator.rb:3)
+Started GET "/" for ::1 at 2020-09-04 16:31:24 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (1.9ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.8ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (135.2ms)
+Completed 200 OK in 1645ms (Views: 922.1ms | ActiveRecord: 47.8ms)
+
+
+Started GET "/users/edit" for ::1 at 2020-09-04 16:31:31 +0700
+Processing by Devise::RegistrationsController#edit as HTML
+  [1m[36mSamurai::User Load (1.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application
+DEPRECATION WARNING: [Devise] `DeviseHelper.devise_error_messages!`
+is deprecated and it will be removed in the next major version.
+To customize the errors styles please run `rails g devise:views` and modify the
+`devise/shared/error_messages` partial.
+ (called from block in _2a126cad53384512b7fa5afe20eb6e6b at /home/khanh/Downloads/SamuraiCRM/engines/core/app/views/devise/registrations/edit.html.erb:5)
+  Rendered engines/core/app/views/devise/registrations/edit.html.erb within layouts/samurai/application (53.7ms)
+Completed 200 OK in 158ms (Views: 151.5ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 16:31:33 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (0.6ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (1.0ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (11.0ms)
+Completed 200 OK in 197ms (Views: 168.8ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 16:31:34 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.1ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (1.6ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.9ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (11.2ms)
+Completed 200 OK in 157ms (Views: 118.3ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 16:33:45 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (0.5ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.8ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (15.6ms)
+Completed 200 OK in 149ms (Views: 144.0ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/tasks/new" for ::1 at 2020-09-04 16:33:46 +0700
+Processing by Samurai::Tasks::TasksController#new as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT "samurai_users".* FROM "samurai_users"[0m
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/_form.html.erb (14.6ms)
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/new.html.erb within layouts/samurai/application (19.8ms)
+Completed 200 OK in 147ms (Views: 134.9ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 16:33:51 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.8ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (12.7ms)
+Completed 200 OK in 221ms (Views: 170.8ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 16:35:28 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (1.2ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (3.5ms)
+Completed 200 OK in 166ms (Views: 155.2ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/tasks/2/edit" for ::1 at 2020-09-04 16:35:29 +0700
+Processing by Samurai::Tasks::TasksController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mSamurai::User Load (1.0ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mSamurai::Tasks::Task Load (0.8ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+#<Set: {Samurai::Contacts::AbilityDecorator, Samurai::Tasks::AbilityDecorator}>
+  Rendering engines/core/app/views/samurai/static/403.html.erb
+  Rendered engines/core/app/views/samurai/static/403.html.erb (0.8ms)
+Completed 403 Forbidden in 18ms (Views: 5.7ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 16:35:33 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.3ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.5ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.4ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (10.7ms)
+Completed 200 OK in 176ms (Views: 130.3ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/tasks" for ::1 at 2020-09-04 16:35:35 +0700
+Processing by Samurai::Tasks::TasksController#index as HTML
+  [1m[36mSamurai::User Load (0.9ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.7ms)[0m  [1m[34mSELECT "samurai_tasks_tasks".* FROM "samurai_tasks_tasks"[0m
+  Rendered engines/tasks/app/views/samurai/tasks/tasks/index.html.erb within layouts/samurai/application (12.4ms)
+Completed 200 OK in 170ms (Views: 161.0ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/" for ::1 at 2020-09-04 16:35:36 +0700
+Processing by Samurai::DashboardController#index as HTML
+  [1m[36mSamurai::User Load (1.4ms)[0m  [1m[34mSELECT  "samurai_users".* FROM "samurai_users" WHERE "samurai_users"."id" = $1 ORDER BY "samurai_users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'samurai/dashboard/index'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/contacts/engine_add_contacts_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_list_to_dashboard' matched 1 times with '[data-samurai-hook='dashboard']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_list_to_dashboard', you should change its definition to include:
+ :original => '71540dc41b16197481bbb7e2e31fe29a742b87de' 
+[1;32mDeface:[0m 2 overrides found for 'layouts/samurai/application'
+[1;32mDeface:[0m 'samurai/contacts/engine_add_contacts_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface:[0m 'samurai/tasks/engine_add_tasks_link_to_nav' matched 1 times with '[data-samurai-hook='main_nav']'
+[1;32mDeface: [WARNING][0m No :original defined for 'samurai/tasks/engine_add_tasks_link_to_nav', you should change its definition to include:
+ :original => 'f5fe48b6dc6986328e0b873b3ffa1b228dd52a7c' 
+  Rendering engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application
+  [1m[36mSamurai::Tasks::Task Load (0.8ms)[0m  [1m[34mSELECT  "samurai_tasks_tasks".* FROM "samurai_tasks_tasks" WHERE "samurai_tasks_tasks"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 3]]
+  [1m[36mSamurai::Contacts::Contact Load (0.5ms)[0m  [1m[34mSELECT "samurai_contacts_contacts".* FROM "samurai_contacts_contacts" WHERE "samurai_contacts_contacts"."user_id" = $1[0m  [["user_id", 1]]
+  Rendered engines/core/app/views/samurai/dashboard/index.html.erb within layouts/samurai/application (10.9ms)
+Completed 200 OK in 180ms (Views: 125.8ms | ActiveRecord: 2.7ms)
+
+
